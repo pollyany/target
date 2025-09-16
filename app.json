@@ -2,6 +2,23 @@
   "expo": {
     "name": "target",
     "slug": "target",
-    "version": "1.0.0"
+    "scheme": "target",
+    "version": "1.0.0",
+    "android": {
+      "package": "com.pollyany.target",
+      "edgeToEdgeEnabled": true,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#3d44cd"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.pollyany.target",
+      "icon": "./assets/ios-icon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font"
+    ]
   }
 }
