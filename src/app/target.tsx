@@ -14,7 +14,7 @@ export default function Target() {
 
   const params = useLocalSearchParams<{ id?: string }>();
   const targetDatabase = useTargetDatabase();
-  
+
   function handleSave() {
     if (!name.trim() || amount <= 0) {
       return Alert.alert(
@@ -27,8 +27,25 @@ export default function Target() {
 
     if (params.id) {
       // update
+      update()
     } else {
       create();
+    }
+  }
+
+  async function update() {
+    try {
+      await targetDatabase.update({ id: Number(params.id), name, amount });
+      Alert.alert("Sucesso!", "Meta atualizada com sucesso!", [
+        {
+          text: "Ok",
+          onPress: router.back,
+        },
+      ]);
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível atualizar a meta.");
+      console.log(error);
+      setIsProcessing(false);
     }
   }
 
@@ -50,20 +67,20 @@ export default function Target() {
 
   async function fetchDetails(id: number) {
     try {
-      const response = await targetDatabase.show(id)
-      setName(response.name)
-      setAmount(response.amount)
+      const response = await targetDatabase.show(id);
+      setName(response.name);
+      setAmount(response.amount);
     } catch (error) {
-      Alert.alert('Erro', 'Não foi possível carregar os detalhes da meta.')
-      console.log(error)
+      Alert.alert("Erro", "Não foi possível carregar os detalhes da meta.");
+      console.log(error);
     }
   }
 
   useEffect(() => {
     if (params.id) {
-      fetchDetails(Number(params.id))
+      fetchDetails(Number(params.id));
     }
-  }, [params.id])
+  }, [params.id]);
 
   return (
     <View style={{ flex: 1, padding: 24 }}>
